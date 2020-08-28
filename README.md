@@ -18,5 +18,5 @@ This script is available in the following versions.
 ## Usage
 
 ```
-.\rdp-connect.ps1 -NameTag <name_tag_value> -User <username> -Profilename <aws_profile_name>
+.\rdp-connect.ps1 -ServerName <name_tag_value> -User <username> -ProfileName <aws_profile_name> -Token <MFA_token>
 ```
