@@ -27,12 +27,20 @@ cd ~
 mkdir .ssh
 ```
 
+If this scripts is used from Windows Server EC2 instances, you need to attach the IAM role to Windows Server EC2 instances.
+
 ## Usage
 
 ```
-# For Windows Server
+# For Windows Server from Windows Server EC2 instances
+.\rdp-connect.ps1 -ServerName <name_tag_value> -User <username>
+
+# For Windows Server from your Windows PC
 .\rdp-connect.ps1 -ServerName <name_tag_value> -User <username> -ProfileName <aws_profile_name> -Token <MFA_token_for_aws_profile>
 
-# For Linux Server
+# For Linux Server from Windows Server EC2 instances
+.\ssh-connect.ps1 -ServerName <name_tag_value> -User <username>
+
+# For Linux Server from your Windows PC
 .\ssh-connect.ps1 -ServerName <name_tag_value> -User <username> -ProfileName <aws_profile_name> -Token <MFA_token_for_aws_profile>
 ```
