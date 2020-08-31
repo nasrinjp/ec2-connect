@@ -14,7 +14,13 @@ function GetTargetInfo {
         [string]$SSMCredName,
         [string]$SSMIPName
     )
-    $cred_text = (Get-SSMParameterValue -Name $SSMCredName -WithDecryption $true -Credential $Role.Credentials).Parameters.Value
-    $server_ip = (Get-SSMParameterValue -Name $SSMIPName -Credential $Role.Credentials).Parameters.Value
+    if ($Role) {
+        $cred_text = (Get-SSMParameterValue -Name $SSMCredName -WithDecryption $true -Credential $Role.Credentials).Parameters.Value
+        $server_ip = (Get-SSMParameterValue -Name $SSMIPName -Credential $Role.Credentials).Parameters.Value
+    }
+    else {
+        $cred_text = (Get-SSMParameterValue -Name $SSMCredName -WithDecryption $true).Parameters.Value
+        $server_ip = (Get-SSMParameterValue -Name $SSMIPName).Parameters.Value
+    }
     return $cred_text, $server_ip
 }

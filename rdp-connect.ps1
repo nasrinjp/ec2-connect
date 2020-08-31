@@ -21,8 +21,13 @@ else {
 $ssm_ip_name = "/ip-address/" + $ServerName
 
 # Get the target information
-$role = SwitchRole -ProfileName $ProfileName -Token $Token
-$target_info = GetTargetInfo -Role $role -SSMCredName $ssm_cred_name -SSMIPName $ssm_ip_name
+if ($ProfileName -and $Token) {
+    $role = SwitchRole -ProfileName $ProfileName -Token $Token
+    $target_info = GetTargetInfo -Role $role -SSMCredName $ssm_cred_name -SSMIPName $ssm_ip_name
+}
+else {
+    $target_info = GetTargetInfo -SSMCredName $ssm_cred_name -SSMIPName $ssm_ip_name
+}
 $cred_text, $server_ip = $target_info
 
 # Connect to the target

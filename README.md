@@ -1,7 +1,8 @@
 # EC2-connect
-You can log in to Windows Server or Linux Server EC2 instances without password.
+You can log in to Windows Server or Linux Server EC2 instances from your Windows PC without password.
 
 ## Prerequisites
+This scripts can be executed in your Windows PC or Windows Server EC2 instances.
 
 ### Environment
 This script is available in the following versions.  
@@ -18,6 +19,13 @@ You need to set the following parameters to SSM Parameter store.
     * For example, /credentials/ssh-key/\<username\>
 * Set the IP address you want to login.
     * For example, /ip-address/\<Name tag\>
+
+You need to create .ssh directory in your home directory.
+
+```
+cd ~
+mkdir .ssh
+```
 
 ## Usage
 
