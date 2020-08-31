@@ -10,14 +10,7 @@ param (
 $ErrorActionPreference = "Stop"
 
 # Generate the parameter name
-## For AD users
-if ($User -match "\\") {
-    $ssm_cred_name = "/credentials/ad/" + ($User -replace "\\", "/")
-}
-## For local users
-else {
-    $ssm_cred_name = "/credentials/local/" + $ServerName + "/" + $User
-}
+$ssm_cred_name = "/credentials/ssh-key/" + $User
 $ssm_ip_name = "/ip-address/" + $ServerName
 
 # Get the target information
@@ -26,5 +19,10 @@ $target_info = GetTargetInfo -Role $role -SSMCredName $ssm_cred_name -SSMIPName 
 $cred_text, $server_ip = $target_info
 
 # Connect to the target
-cmdkey /generic:TERMSRV/$server_ip /user:$User /pass:$cred_text
-mstsc /v:$server_ip
+$ssh_key = "~\.ssh\" + $ProfileName + "_" + $User + ".pem"
+## Create PEM file without BOM
+$cred_text | % { [Text.Encoding]::UTF8.GetBytes($_) } | Set-Content -Path $ssh_key -Encoding Byte
+ssh -i $ssh_key $User@$server_ip
+
+# Cleanup PEM file
+Remove-Item $ssh_key
